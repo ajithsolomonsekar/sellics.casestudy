@@ -19,7 +19,7 @@ public class SmartRankingIndexController {
 	@Autowired
 	private String awsS3Object;
 	
-	@GetMapping("/ind_ranks_asin_cert_keyword")
+	@GetMapping("/resource1")
 	public ResponseEntity<String> getIRForASINForCKeyword(){
 		
 		amazonS3ClientService.consumeObjectFromS3Bucket(awsS3Object);
