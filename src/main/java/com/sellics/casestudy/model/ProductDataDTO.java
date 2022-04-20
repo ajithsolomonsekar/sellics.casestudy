@@ -3,7 +3,7 @@ package com.sellics.casestudy.model;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({ "timestamp", "asin", "keyword", "rank" })
-public class Product {
+public class ProductDataDTO {
 
 	private String timestamp;
 	private String asin;
