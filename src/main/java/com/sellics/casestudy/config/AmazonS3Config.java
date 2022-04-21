@@ -3,8 +3,9 @@ package com.sellics.casestudy.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
@@ -28,20 +29,28 @@ public class AmazonS3Config {
     
     @Value("${aws.s3.object}")
     private String awsS3Object;
-    
-	@Bean
-    public BasicAWSCredentials basicAWSCredentials() {
-        return new BasicAWSCredentials(accessKey, secretKey);
-    }
 
     @Bean
-    public AmazonS3 amazonS3Client(AWSCredentials awsCredentials) {
-        return AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+    public AmazonS3 amazonS3Client() {
+    	
+    	BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey);
+    	
+        return AmazonS3ClientBuilder.standard().withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials))
         .withRegion(Regions.fromName(region))
         .build();
     }
     
-    @Bean(name = "awsS3Bucket")
+    @Bean("threadPoolTaskExecutor")
+    public TaskExecutor getAsyncExecutor() {
+    	ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+    	executor.setMaxPoolSize(5);
+    	executor.setWaitForTasksToCompleteOnShutdown(true);
+    	executor.setThreadNamePrefix("amazon-s3-client-thread-");
+    	executor.initialize();
+    	return executor;
+    }
+
+	@Bean(name = "awsS3Bucket")
     public String getAWSS3Bucket() {
         return awsS3Bucket;
     }

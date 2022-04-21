@@ -2,6 +2,7 @@ package com.sellics.casestudy.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -9,20 +10,28 @@ import javax.persistence.Table;
 @Table(name = "PRODUCT_DATA")
 public class ProductData {
 
-	@Column
 	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	private Integer id;
+	@Column(name = "asin")
 	private String asin;
-
-	@Column
+	@Column(name = "keyword")
 	private String keyword;
-
-	@Column
+	@Column(name = "rank")
 	private Integer rank;
-
-	@Column
-	private Integer timestamp;
+	@Column(name = "timestamp")
+	private Long timestamp;
 
 	public ProductData() {
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getAsin() {
@@ -49,11 +58,11 @@ public class ProductData {
 		this.rank = rank;
 	}
 
-	public Integer getTimestamp() {
+	public Long getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Integer timestamp) {
+	public void setTimestamp(Long timestamp) {
 		this.timestamp = timestamp;
 	}
 
