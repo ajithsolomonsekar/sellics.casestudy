@@ -2,10 +2,9 @@ package com.sellics.casestudy.service.impl;
 
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,9 +31,13 @@ public class ProductDataServiceImpl implements ProductDataService {
 		
 		if(productDataList.isPresent()) {
 			var list = productDataList.get();
-			List<String[]> observationResponse = new ArrayList<>();
+			
+			SortedSet<String[]> observationResponse = new TreeSet<>();
 			if(!list.isEmpty()) {
-				list.stream().sorted(Comparator.comparingLong(ProductData::getTimestamp)).forEach(data -> {
+				list.stream()
+//				.distinct()
+				.sorted(Comparator.comparingLong(ProductData::getTimestamp))
+				.forEach(data -> {
 					String[] observation = new String[2];
 					var timestamp = Instant.ofEpochMilli(data.getTimestamp())
 							.atZone(ZoneId.systemDefault()).toLocalDateTime();

@@ -1,13 +1,11 @@
 package com.sellics.casestudy.service.impl;
 
 import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.amazonaws.services.s3.AmazonS3;
@@ -18,46 +16,44 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.sellics.casestudy.entity.ProductData;
 import com.sellics.casestudy.repository.ProductDataRepository;
-import com.sellics.casestudy.service.AmazonS3ClientService;
+import com.sellics.casestudy.service.S3ClientService;
 
 @Service
-public class AmazonS3ClientServiceImpl implements AmazonS3ClientService {
+public class S3ClientServiceImpl implements S3ClientService {
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(AmazonS3ClientServiceImpl.class);
+	public static final Logger log = LoggerFactory.getLogger(S3ClientServiceImpl.class);
 
 	@Autowired
 	private AmazonS3 amazonS3Client;
 
 	@Autowired
-	private String awsS3Bucket;
-
-	@Autowired
 	private ProductDataRepository productDataRepository;
 
 	@Override
-	@Async("threadPoolTaskExecutor")
-	public CompletableFuture<Void> consumeObjectFromS3Bucket(String fileName) {
-	
-		GetObjectRequest getObjectRequest = new GetObjectRequest(awsS3Bucket, fileName);
-		
+//	@Async("threadPoolTaskExecutor")
+	public String consumeObjectFromS3Bucket(String bucketName, String fileName) {
 		long startTime = System.currentTimeMillis();
-			CompletableFuture<Void> process1 = CompletableFuture.runAsync(
-					()->processS3InputStream(amazonS3Client.getObject(getObjectRequest).getObjectContent()));
-			
-		LOGGER.info("Total time taken: {}", System.currentTimeMillis()-startTime);
-		process1.join();
-		return CompletableFuture.completedFuture(null);
+		GetObjectRequest getObjectRequest = new GetObjectRequest(bucketName, fileName);
+		try {
+			processS3InputStream(amazonS3Client.getObject(getObjectRequest).getObjectContent());
+			log.info("Total records inserted: {} and Total time taken: {}", productDataRepository.count(),
+					System.currentTimeMillis() - startTime);
+		} catch (Exception ex) {
+			log.error("Error occured while consuming s3 object: {}", ex.getMessage());
+		}
+
+		return "Successfully consumed S3 object";
+
 	}
-	
+
 	private void processS3InputStream(S3ObjectInputStream s3InputStream) {
-		
+
 		var mapper = new CsvMapper();
 		var schema = CsvSchema.emptySchema().withHeader().withColumnSeparator(';');
 
 		MappingIterator<ProductData> readData;
 		try {
-			readData = mapper.readerWithTypedSchemaFor(ProductData.class)
-					.with(schema).readValues(s3InputStream);
+			readData = mapper.readerWithTypedSchemaFor(ProductData.class).with(schema).readValues(s3InputStream);
 
 			var modelMapper = new ModelMapper();
 
@@ -67,7 +63,7 @@ public class AmazonS3ClientServiceImpl implements AmazonS3ClientService {
 				productDataRepository.save(productDataEntity);
 			}
 		} catch (IOException e) {
-			LOGGER.error("Error occured while parsing CSV to Data object");
+			log.error("Error occured while parsing CSV to Data object");
 		}
 	}
 

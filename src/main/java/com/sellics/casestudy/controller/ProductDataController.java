@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sellics.casestudy.model.TimeSeriesResponse;
-import com.sellics.casestudy.service.AmazonS3ClientService;
+import com.sellics.casestudy.service.S3ClientService;
 import com.sellics.casestudy.service.ProductDataService;
 import com.sellics.casestudy.validator.SmartRankingIndexValidator;
 
@@ -25,10 +25,7 @@ import com.sellics.casestudy.validator.SmartRankingIndexValidator;
 public class ProductDataController {
 	
 	@Autowired
-	private AmazonS3ClientService amazonS3ClientService;
-	
-	@Autowired
-	private String awsS3Object;
+	private S3ClientService amazonS3ClientService;
 	
 	@Autowired
 	private ProductDataService productDataService;
@@ -37,14 +34,14 @@ public class ProductDataController {
 	private SmartRankingIndexValidator smartRankingIndexValidator;
 	
 	private static final Logger log = LoggerFactory.getLogger(ProductDataController.class);
-
+/*
 	@GetMapping("/resource1")
 	public ResponseEntity<String> getIRForASINForCKeyword(){
 		
 		amazonS3ClientService.consumeObjectFromS3Bucket(awsS3Object);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
-	}
+	}*/
 	
 	@GetMapping(path = "/resource2")
 	public ResponseEntity<TimeSeriesResponse> getSmartRankingIndex(@Valid @RequestParam("asin")String asin,

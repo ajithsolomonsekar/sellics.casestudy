@@ -1,13 +1,13 @@
 package com.sellics.casestudy.model;
 
-import java.util.List;
+import java.util.SortedSet;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(Include.NON_EMPTY)
-public class TimeSeriesResponse extends BaseReponse{
+public class TimeSeriesResponse extends BaseReponse {
 
 //	@JsonProperty("JsonTs")
 //	private String jsonTs = "irregular";
@@ -24,7 +24,7 @@ public class TimeSeriesResponse extends BaseReponse{
 	private String keyword;
 
 	@JsonProperty("Observations")
-	private List<String[]> observations;
+	private SortedSet<String[]> observations;
 
 	public String getAsin() {
 		return asin;
@@ -42,11 +42,12 @@ public class TimeSeriesResponse extends BaseReponse{
 		this.keyword = keyword;
 	}
 
-	public List<String[]> getObservations() {
+	public SortedSet<String[]> getObservations() {
 		return observations;
 	}
 
-	public void setObservations(List<String[]> observations) {
+	public void setObservations(SortedSet<String[]> observations) {
 		this.observations = observations;
 	}
+
 }
