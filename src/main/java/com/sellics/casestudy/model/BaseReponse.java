@@ -3,16 +3,13 @@ package com.sellics.casestudy.model;
 import org.springframework.http.HttpStatus;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_EMPTY)
 public class BaseReponse {
 
-	@JsonProperty("HttpStatus")
 	protected HttpStatus httpStatus;
 
-	@JsonProperty("DeveloperMessage")
 	protected String developerMessage;
 
 	public BaseReponse() {

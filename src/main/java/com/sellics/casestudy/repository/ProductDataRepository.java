@@ -10,11 +10,11 @@ import com.sellics.casestudy.entity.ProductData;
 
 @Repository
 public interface ProductDataRepository extends JpaRepository<ProductData, Integer> {
-	
+
 	Optional<List<ProductData>> findByAsinAndKeyword(String asin, String keyword);
-	
+
 	Optional<List<ProductData>> findByKeyword(String keyword);
-	
+
 	Optional<List<ProductData>> findByAsin(String asin);
 
 }

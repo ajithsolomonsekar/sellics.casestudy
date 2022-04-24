@@ -14,15 +14,15 @@ public class Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
-	
-    @Bean("threadPoolTaskExecutor")
-    public TaskExecutor getAsyncExecutor() {
-    	ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-    	executor.setMaxPoolSize(5);
-    	executor.setWaitForTasksToCompleteOnShutdown(true);
-    	executor.setThreadNamePrefix("amazon-s3-client-thread-");
-    	executor.initialize();
-    	return executor;
-    }
+
+	@Bean("threadPoolTaskExecutor")
+	public TaskExecutor getAsyncExecutor() {
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setMaxPoolSize(2);
+		executor.setWaitForTasksToCompleteOnShutdown(true);
+		executor.setThreadNamePrefix("amazon-s3-client-thread-");
+		executor.initialize();
+		return executor;
+	}
 
 }

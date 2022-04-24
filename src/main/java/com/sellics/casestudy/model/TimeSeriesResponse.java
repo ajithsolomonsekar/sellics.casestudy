@@ -1,53 +1,58 @@
 package com.sellics.casestudy.model;
 
-import java.util.SortedSet;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(Include.NON_EMPTY)
 public class TimeSeriesResponse extends BaseReponse {
 
-//	@JsonProperty("JsonTs")
-//	private String jsonTs = "irregular";
-//	@JsonProperty("BasePeriod")
-//	private String basePeriod;
-//	@JsonProperty("Anchor")
-//	private String anchor;
-//	@JsonProperty("SubPeriods")
-//	private String subPeriods;
+	private String docType;
+	private String version;
+	private TimeSeriesResponseHeader header;
+	private List<TimeSeriesResponseData> data;
 
-	@JsonProperty("ASIN")
-	private String asin;
-	@JsonProperty("Keyword")
-	private String keyword;
-
-	@JsonProperty("Observations")
-	private SortedSet<String[]> observations;
-
-	public String getAsin() {
-		return asin;
+	public TimeSeriesResponse(String docType, String version) {
+		super();
+		this.docType = docType;
+		this.version = version;
 	}
 
-	public void setAsin(String asin) {
-		this.asin = asin;
+	public TimeSeriesResponse() {
+		super();
 	}
 
-	public String getKeyword() {
-		return keyword;
+	public String getDocType() {
+		return docType;
 	}
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+	public void setDocType(String docType) {
+		this.docType = docType;
 	}
 
-	public SortedSet<String[]> getObservations() {
-		return observations;
+	public String getVersion() {
+		return version;
 	}
 
-	public void setObservations(SortedSet<String[]> observations) {
-		this.observations = observations;
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	public TimeSeriesResponseHeader getHeader() {
+		return header;
+	}
+
+	public void setHeader(TimeSeriesResponseHeader header) {
+		this.header = header;
+	}
+
+	public List<TimeSeriesResponseData> getData() {
+		return data;
+	}
+
+	public void setData(List<TimeSeriesResponseData> data) {
+		this.data = data;
 	}
 
 }
