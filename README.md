@@ -1,6 +1,6 @@
 # Sellics CaseStudy for Search Ranking Index API
 
-[Spring Boot](http://projects.spring.io/spring-boot/) application that ingests and processes csv file from S3 bucket, and presents the results through REST APIs that help retailers make sense of this data as follows:
+[Spring Boot](http://projects.spring.io/spring-boot/) application that ingests and processes csv file from AWS S3 bucket, and presents the results through REST APIs that help retailers make sense of this data as follows:
 
 * a time series containing the individual ranks for an ASIN, for a certain keyword
 * a time series containing the aggregated ranks for all ASINs for a certain keyword
@@ -64,3 +64,7 @@ Fill the login form as follows and click on Connect:
 Swagger API documentation can be found at **http://localhost:8080/sellics/swagger-ui/index.html**
 
 <img src="images/swagger-ui.png"/>
+
+## Postman API Documentation
+
+Postman collection can be downloaded from **https://www.getpostman.com/collections/6a6521919a8996f5de9a**
