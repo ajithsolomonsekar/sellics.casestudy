@@ -34,8 +34,8 @@ There are several ways to run a Spring Boot application on your local machine. O
 Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html) like so:
 
 ```shell
-$ git clone https://github.com/yourfriendajith/ajiranet.git
-$ cd ajiranet
+$ git clone https://github.com/ajithsolomonsekar/sellics.casestudy.git
+$ cd sellics.casestudy
 $ mvn spring-boot:run
 
 ```shell
@@ -45,7 +45,7 @@ mvn spring-boot:run
 
 #### H2 Console
 
-URL to access H2 console: **http://localhost:8080/h2-console/login.jsp**
+URL to access H2 console: **http://localhost:8080/sellics/h2-console**
 
 Fill the login form as follows and click on Connect:
 
