@@ -41,7 +41,7 @@ public class ProductDataController {
 
 	private static final Logger log = LoggerFactory.getLogger(ProductDataController.class);
 
-	@GetMapping(path = "/resource2", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/smart_raking_index", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TimeSeriesResponse> getSmartRankingIndex(@Valid @RequestParam("asin") String asin,
 			@Valid @RequestParam("keyword") String keyword) {
 
@@ -54,7 +54,7 @@ public class ProductDataController {
 
 	}
 
-	@GetMapping(path = "/resource3", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/smart_ranking_index_keyword", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TimeSeriesResponse> getSmartRankingIndexForKeyword(
 			@Valid @RequestParam("keyword") String keyword) {
 
@@ -67,7 +67,7 @@ public class ProductDataController {
 
 	}
 
-	@GetMapping(path = "/resource4", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/smart_ranking_index_asin", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TimeSeriesResponse> getSmartRankingIndexForASIN(@Valid @RequestParam("asin") String asin) {
 
 		log.info("Request ASIN: {}", asin);
