@@ -26,6 +26,7 @@ import com.sellics.casestudy.model.TimeSeriesResponseHeader;
 import com.sellics.casestudy.model.TimeSeriesResponseHeaderColumn;
 import com.sellics.casestudy.repository.ProductDataRepository;
 import com.sellics.casestudy.service.ProductDataService;
+import com.sellics.casestudy.util.Constants;
 
 @Service
 public class ProductDataServiceImpl implements ProductDataService {
@@ -46,8 +47,8 @@ public class ProductDataServiceImpl implements ProductDataService {
 			var productDataList = optionalProductDataList.get();
 
 			if (!productDataList.isEmpty()) {
-				response.setDocType("jts");
-				response.setVersion("1.0");
+				response.setDocType(Constants.JSON_TIME_SERIES);
+				response.setVersion(Constants.JSON_TIME_SERIES_VERSION);
 				
 				Function<ProductData, ProductDataDTO> entityToDTO = product -> new ModelMapper().map(product,
 						ProductDataDTO.class);
@@ -67,14 +68,14 @@ public class ProductDataServiceImpl implements ProductDataService {
 
 				response.setData(data);
 				var header = new TimeSeriesResponseHeader();
-				setResponseHeader(header, data, "NONE");
+				setResponseHeader(header, data, Constants.AGGREGATE_TYPE_NONE);
 				response.setHeader(header);
 
 				return new ResponseEntity<TimeSeriesResponse>(response, HttpStatus.OK);
 			}
 		}
 		response.setHttpStatus(HttpStatus.NOT_FOUND);
-		response.setDeveloperMessage("No Product details found for given ASIN & Keyword");
+		response.setDeveloperMessage(Constants.ERR_RESPONSE_1);
 		log.error("No Product details found for given ASIN: {} & Keyword: {}", asin, keyword);
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 
@@ -91,7 +92,7 @@ public class ProductDataServiceImpl implements ProductDataService {
 		}
 
 		response.setHttpStatus(HttpStatus.NOT_FOUND);
-		response.setDeveloperMessage("No Product details found for given Keyword");
+		response.setDeveloperMessage(Constants.ERR_RESPONSE_2);
 
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
@@ -107,7 +108,7 @@ public class ProductDataServiceImpl implements ProductDataService {
 		}
 
 		response.setHttpStatus(HttpStatus.NOT_FOUND);
-		response.setDeveloperMessage("No Product details found for given ASIN");
+		response.setDeveloperMessage(Constants.ERR_RESPONSE_3);
 
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 
@@ -116,8 +117,8 @@ public class ProductDataServiceImpl implements ProductDataService {
 	private ResponseEntity<TimeSeriesResponse> processProductData(List<ProductData> productDataList,
 			TimeSeriesResponse response) {
 
-		response.setDocType("jts");
-		response.setVersion("1.0");
+		response.setDocType(Constants.JSON_TIME_SERIES);
+		response.setVersion(Constants.JSON_TIME_SERIES_VERSION);
 
 		List<TimeSeriesResponseData> data = new ArrayList<>();
 		productDataList.stream().map(ProductData::getTimestamp).distinct().sorted().forEach(timestamp -> {
@@ -138,7 +139,7 @@ public class ProductDataServiceImpl implements ProductDataService {
 
 		response.setData(data);
 		var header = new TimeSeriesResponseHeader();
-		setResponseHeader(header, data, "MEDIAN");
+		setResponseHeader(header, data, Constants.AGGREGATE_TYPE_MEDIAN);
 		response.setHeader(header);
 
 		return new ResponseEntity<TimeSeriesResponse>(response, HttpStatus.OK);
@@ -157,10 +158,10 @@ public class ProductDataServiceImpl implements ProductDataService {
 	private TimeSeriesResponseHeaderColumn setCommonAttributes(String aggregateType) {
 		var column = new TimeSeriesResponseHeaderColumn();
 		column.setAggregate(aggregateType);
-		column.setDataType("NUMBER");
-		column.setFormat("0");
-		column.setName("Rank");
-		column.setRenderType("VALUE");
+		column.setDataType(Constants.RESPONSE_DATATYPE);
+		column.setFormat(Constants.RESPONSE_FORMAT);
+		column.setName(Constants.RESPONSE_NAME);
+		column.setRenderType(Constants.RESPONSE_RENDER_TYPE);
 		return column;
 	}
 

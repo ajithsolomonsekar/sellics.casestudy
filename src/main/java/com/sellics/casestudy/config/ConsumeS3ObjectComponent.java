@@ -1,25 +1,21 @@
 package com.sellics.casestudy.config;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import com.sellics.casestudy.service.S3ClientService;
 
 @Component
-public class Config implements InitializingBean {
+public class ConsumeS3ObjectComponent implements InitializingBean {
 
-	private static final Logger log = LoggerFactory.getLogger(Config.class);
+	private static final Logger log = LoggerFactory.getLogger(ConsumeS3ObjectComponent.class);
 
 	@Value("${aws.s3.bucket}")
 	private String awsS3Bucket;

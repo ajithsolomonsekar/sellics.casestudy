@@ -1,7 +1,5 @@
 package com.sellics.casestudy.service;
 
-import javax.validation.Valid;
-
 import org.springframework.http.ResponseEntity;
 
 import com.sellics.casestudy.model.TimeSeriesResponse;

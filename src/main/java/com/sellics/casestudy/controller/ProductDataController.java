@@ -9,14 +9,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sellics.casestudy.config.ConsumeS3ObjectComponent;
 import com.sellics.casestudy.model.TimeSeriesResponse;
 import com.sellics.casestudy.service.ProductDataService;
+import com.sellics.casestudy.service.S3ClientService;
 import com.sellics.casestudy.validator.SmartRankingIndexRequestValidator;
 
 @RestController
@@ -25,13 +29,19 @@ public class ProductDataController {
 
 	@Autowired
 	private ProductDataService productDataService;
+	
+	@Autowired
+	private ConsumeS3ObjectComponent consumeS3ObjectComponent;
+	
+	@Autowired
+	private S3ClientService amazonS3ClientService;
 
 	@Autowired
 	private SmartRankingIndexRequestValidator smartRankingIndexValidator;
 
 	private static final Logger log = LoggerFactory.getLogger(ProductDataController.class);
 
-	@GetMapping(path = "/resource2")
+	@GetMapping(path = "/resource2", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TimeSeriesResponse> getSmartRankingIndex(@Valid @RequestParam("asin") String asin,
 			@Valid @RequestParam("keyword") String keyword) {
 
@@ -44,7 +54,7 @@ public class ProductDataController {
 
 	}
 
-	@GetMapping(path = "/resource3")
+	@GetMapping(path = "/resource3", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TimeSeriesResponse> getSmartRankingIndexForKeyword(
 			@Valid @RequestParam("keyword") String keyword) {
 
@@ -57,7 +67,7 @@ public class ProductDataController {
 
 	}
 
-	@GetMapping(path = "/resource4")
+	@GetMapping(path = "/resource4", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TimeSeriesResponse> getSmartRankingIndexForASIN(@Valid @RequestParam("asin") String asin) {
 
 		log.info("Request ASIN: {}", asin);
@@ -74,6 +84,12 @@ public class ProductDataController {
 		response.setHttpStatus(HttpStatus.BAD_REQUEST);
 		response.setDeveloperMessage(String.join(",", status));
 		return new ResponseEntity<TimeSeriesResponse>(response, HttpStatus.BAD_REQUEST);
+	}
+	
+	@PostMapping(path="/consumes3object")
+	public ResponseEntity<String> consumeS3Object(){
+		consumeS3ObjectComponent.consumeS3Object(amazonS3ClientService);
+		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 
 }

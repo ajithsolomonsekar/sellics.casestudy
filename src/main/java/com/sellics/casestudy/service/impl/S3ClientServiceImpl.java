@@ -17,6 +17,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.sellics.casestudy.entity.ProductData;
 import com.sellics.casestudy.repository.ProductDataRepository;
 import com.sellics.casestudy.service.S3ClientService;
+import com.sellics.casestudy.util.Constants;
 
 @Service
 public class S3ClientServiceImpl implements S3ClientService {
@@ -37,14 +38,14 @@ public class S3ClientServiceImpl implements S3ClientService {
 
 		try {
 			processS3InputStream(amazonS3Client.getObject(getObjectRequest).getObjectContent());
-			log.info("Total records inserted: {} and Total time taken: {}", productDataRepository.count(),
+			log.info("Total records count: {} and Time taken: {}", productDataRepository.count(),
 					System.currentTimeMillis() - startTime);
 		} catch (Exception ex) {
 			log.error("Error occured while consuming s3 object: {}", ex.getMessage());
-			return "Error occured while consuming s3 object";
+			return Constants.ERR_RESPONSE_4;
 		}
 		log.info("Successfully consumed S3 object: {}", fileName);
-		return "Successfully consumed S3 object";
+		return Constants.SUCCESS_RESPONSE;
 
 	}
 

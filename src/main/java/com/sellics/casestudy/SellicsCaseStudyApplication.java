@@ -9,10 +9,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 @SpringBootApplication
 @EnableAsync
-public class Application {
+public class SellicsCaseStudyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(SellicsCaseStudyApplication.class, args);
 	}
 
 	@Bean("threadPoolTaskExecutor")
