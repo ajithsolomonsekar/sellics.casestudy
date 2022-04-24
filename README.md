@@ -1,7 +1,6 @@
 # Sellics CaseStudy for Search Ranking Index API
 
-[Spring Boot](http://projects.spring.io/spring-boot/) application that ingests and processes csv file from S3 bucket, and presents the results
-through a smart ranking index REST API that help retailers make sense of this data as follows:
+[Spring Boot](http://projects.spring.io/spring-boot/) application that ingests and processes csv file from S3 bucket, and presents the results through REST APIs that help retailers make sense of this data as follows:
 
 * a time series containing the individual ranks for an ASIN, for a certain keyword
 * a time series containing the aggregated ranks for all ASINs for a certain keyword
@@ -56,25 +55,12 @@ Fill the login form as follows and click on Connect:
 * 	User Name: **sa**
 * 	Password:
 
-<img src="images\h2-console-login.PNG"/>
+<img src="images/h2-console-login.png"/>
 
-<img src="images\h2-console-main-view.PNG"/>
+<img src="images/h2-console-main-view.png"/>
 
-## Testing API
-### Testing with cURL
+## Swagger Documentation
 
-Enabled HTTPS in localhost by generating a self signed certificate of PKCS12 type and added in *main/resource* but cURL is not accepting self signed certificate, hence currently HTTPS is disabled in the Spring Boot application.
+Swagger API documentation can be found at **http://localhost:8080/sellics/swagger-ui/index.html**
 
-### URLs
-
-|                  URL                   | Method |     Request Body       	     |   
-|----------------------------------------|--------|-----------------------------------
-|`http://localhost:8080/ajiranet/process`| POST   | CREATE /devices      	     |
-|`http://localhost:8080/ajiranet/process`| POST   | CREATE /connections		     |
-|`http://localhost:8080/ajiranet/process`| POST   | MODIFY /devices/A1/strength      |
-|`http://localhost:8080/ajiranet/process`| POST   | FETCH /devices 	   	     |
-|`http://localhost:8080/ajiranet/process`| POST   | FETCH /info-routes?from=A1&to=A5 |
-
-
-
-
+<img src="images/swagger-ui.png"/>
