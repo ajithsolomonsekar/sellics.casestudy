@@ -75,13 +75,13 @@ Once the application is Up, It will start consuming the s3 object asynchronously
 POST **http://localhost:8080/sellics/v1/consumes3object**
 
 #### To get a time series containing the individual ranks for an ASIN, for a certain keyword
-GET **http://localhost:8080/sellics/v1/smart_raking_index?asin=B002JIO3QI&keyword=wallet**
+GET **http://localhost:8080/sellics/v1/smart_raking_index?asin=B07334WXN5&keyword=woodgrain%20watches%20men**
 
 #### To get a time series containing the aggregated ranks for all ASINs for a certain keyword
-GET **http://localhost:8080/sellics/v1/smart_ranking_index_keyword?keyword=wallet**
+GET **http://localhost:8080/sellics/v1/smart_ranking_index_keyword?keyword=woodgrain%20watches%20men**
 
 #### To get a time series containing the aggregated ranks of all keywords for a certain ASIN
-GET **http://localhost:8080/sellics/v1/smart_ranking_index_asin?asin=B0962K7ZVV**
+GET **http://localhost:8080/sellics/v1/smart_ranking_index_asin?asin=B07334WXN5**
 
 Response for all three endpoints will be in the format of **JSON TIME SERIES** and documentation for same can be found [here](https://docs.eagle.io/en/latest/reference/historic/jts.html#)
 
