@@ -1,3 +1,12 @@
+<div id="header" align="center">
+  <img src="https://media.giphy.com/media/M9gbBd9nbDrOTu1Mqx/giphy.gif" width="100"/>
+</div>
+<div id="badges" align="center">
+  <a href="https://www.linkedin.com/in/ajith-solomon-sekar">
+    <img src="https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
+  </a>
+</div>
+
 # Sellics CaseStudy for Search Ranking Index API
 
 [Spring Boot](http://projects.spring.io/spring-boot/) application that ingests and processes csv file from AWS S3 bucket, and presents the results through REST APIs that help retailers make sense of this data as follows:
@@ -59,12 +68,29 @@ Fill the login form as follows and click on Connect:
 
 <img src="images/h2-console-main-view.png"/>
 
+### Testing API
+
+Once the application is Up, It will start consuming the s3 object asynchronously and load the object csv data to in-memory H2 database. In case of any exception during this data load, we can use below API to trigger the process to consume s3 object again.
+
+POST **http://localhost:8080/sellics/v1/consumes3object**
+
+#### To get a time series containing the individual ranks for an ASIN, for a certain keyword
+GET **http://localhost:8080/sellics/v1/smart_raking_index?asin=B002JIO3QI&keyword=wallet**
+
+#### To get a time series containing the aggregated ranks for all ASINs for a certain keyword
+GET **http://localhost:8080/sellics/v1/smart_ranking_index_keyword?keyword=wallet**
+
+#### To get a time series containing the aggregated ranks of all keywords for a certain ASIN
+GET **http://localhost:8080/sellics/v1/smart_ranking_index_asin?asin=B0962K7ZVV**
+
+Response for all three endpoints will be in the format of **JSON TIME SERIES** and documentation for same can be found [here](https://docs.eagle.io/en/latest/reference/historic/jts.html#)
+
+## Postman Collection
+
+Postman collection can be downloaded from **https://www.getpostman.com/collections/6a6521919a8996f5de9a**
+
 ## Swagger Documentation
 
 Swagger API documentation can be found at **http://localhost:8080/sellics/swagger-ui/index.html**
 
 <img src="images/swagger-ui.png"/>
-
-## Postman API Documentation
-
-Postman collection can be downloaded from **https://www.getpostman.com/collections/6a6521919a8996f5de9a**
